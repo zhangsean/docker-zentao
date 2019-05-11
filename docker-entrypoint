@@ -30,7 +30,7 @@ elif [ "$#" == "0" ]; then
       echo "${SMTP_HOST}" >> /etc/hosts
     fi
   elif [ -f "/opt/zbox/app/zentao/VERSION" ]; then
-    CURRENT_VER=`cat /opt/zbox/app/zentao/VERSION`
+    CURRENT_VER=`cat /opt/zbox/app/zentao/VERSION | sed 's|.stable||g'`
     echo "Installed Zentao version: $CURRENT_VER"
     echo "New Zentao version: $ZENTAO_VER"
     if [ $ZENTAO_VER != $CURRENT_VER ]; then
@@ -43,7 +43,7 @@ elif [ "$#" == "0" ]; then
       tar -zxf /tmp/zbox.tar.gz -C /tmp/
       mv /tmp/zbox/app/zentao /opt/zbox/app/
       mv /tmp/upgrade.php /opt/zbox/app/zentao/www/
-      chmod 664 /opt/zbox/app/zentao/www/upgrade.php
+      chown 1000:1000 /opt/zbox/app/zentao/www/upgrade.php
       rm -rf /tmp/*
       rm -rf /opt/zbox/tmp/apache/httpd.pid
       # auto location / to /zentao/
