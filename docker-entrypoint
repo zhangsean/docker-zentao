@@ -59,7 +59,6 @@ elif [ "$#" == "0" ]; then
   fi
 
   # start service and health check
-  cat /opt/zbox/README
   zbox start
   tail -f /dev/null
 
