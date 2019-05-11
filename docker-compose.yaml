@@ -1,7 +1,7 @@
-version: "2"
-services: 
+version: "2.2"
+services:
   zentao:
-    image: idoop/zentao:latest
+    image: zhangsean/zentao:latest
     container_name: zentao
     # if web response code: 310 ERR_TOO_MANY_REDIRECTS, please use host mode.
 #    network_mode: "host"
@@ -12,12 +12,11 @@ services:
     # the zentao adminstrator account is 'admin',and init password is '123456'.
     environment:
     # specifies Adminer account and password for web login database.
-      USER: "root"
-      PASSWD: "123456"
+      ADMINER_USER: "root"
+      ADMINER_PASSWD: "123456"
       BIND_ADDRESS: "false"
-#      SMTP_HOST: "163.177.90.125 smtp.exmail.qq.com"
     extra_hosts:
-      - "smtp.exmail.qq.com 163.177.90.125"
+      - "smtp.exmail.qq.com:163.177.90.125"
     volumes:
       - ./data:/opt/zbox/
     restart: always

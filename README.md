@@ -24,7 +24,8 @@ Office Support: [http://www.zentao.net/](http://www.zentao.net/)
 
 **Pro edition**
 
-- `pro-8.2`,`pro`
+- `pro-8.3`,`pro`
+- `pro-8.2`
 - `pro-7.1`,`pro-7.3`,`pro-7.5.1`
 - `pro-6.7.3`
 
@@ -36,8 +37,8 @@ mkdir -p /data/zbox && \
 docker run -d -p 80:80 -p 3306:3306 \
         -e ADMINER_USER="root" -e ADMINER_PASSWD="password" \
         -e BIND_ADDRESS="false" \
-        -e SMTP_HOST="163.177.90.125 smtp.exmail.qq.com" \
         -v /data/zbox/:/opt/zbox/ \
+        --add-host smtp.exmail.qq.com:163.177.90.125 \
         --name zentao-server \
         zhangsean/zentao:latest
 ```
@@ -60,14 +61,15 @@ Note: Make sure your Host feed available on either port `80` or `3306`.
 * `ADMINER_USER` : set the web login database Adminer account.
 * `ADMINER_PASSWD` : set the web login database Adminer password. 
 * `BIND_ADDRESS` : if set value with `false`,the MySQL server will not bind address.
-* `SMTP_HOST` : set the smtp server IP and host.(If can't send mail,it will be helpful.)
+* `SMTP_HOST` : set the smtp server IP and host.(If can't send mail,it will be helpful.) Can also use `extra_host` in docker-compose.yaml,or use param `--add-host` when use `dokcer run` command.
 
-Note: The zentao administrator account is **admin**,and init password is **123456**.
+Note: The Zentao administrator account is **admin**,and default initialization password is **123456**.
       And MySQL root account password is **123456**,please change password when you first login.
 
 ### Upgrade Version
 
 > If you want upgrade the zentao version, just run a container with the latest docker image and mount the same zbox path `$volume/zbox/`.
+
 ```bash
 # stop and backup old container
 docker stop zentao-server
@@ -80,8 +82,8 @@ docker pull zhangsean/zentao:latest
 docker run -d -p 80:80 -p 3306:3306 \
         -e ADMINER_USER="root" -e ADMINER_PASSWD="password" \
         -e BIND_ADDRESS="false" \
-        -e SMTP_HOST="163.177.90.125 smtp.exmail.qq.com" \
         -v /data/zbox/:/opt/zbox/ \
+        --add-host smtp.exmail.qq.com:163.177.90.125 \
         --name zentao-server \
         zhangsean/zentao:latest
 docker logs -f zentao-server
@@ -99,12 +101,7 @@ Start Apache success
 Start Mysql success
 ```
 Wait until `Start Mysql success`, visit your zentao website to complete the upgrade task step by step.
-
-After you complete the upgrade task in your zentao website and confirm everything looks good, delete the backups to save your disk space.
-```bash
-docker rm -f zentao-server-bak
-rm -rf /data/zbox-bak
-```
+After you complete the upgrade task in your zentao website and confirm everything looks good, delete the backups to save your disk space.`docker rm -f zentao-server-bak && rm -rf /data/zbox-bak`
 > [See Detail](https://www.zentao.net/book/zentaopmshelp/67.html)
 
 ### Building the image
