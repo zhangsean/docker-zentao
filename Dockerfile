@@ -1,7 +1,7 @@
-FROM buildpack-deps:18.04-curl 
+FROM buildpack-deps:18.04-curl
 MAINTAINER Swire Chen <idoop@msn.cn>
 
-ADD https://raw.githubusercontent.com/easysoft/zentaopms/master/www/upgrade.php.tmp /tmp/upgrade.php
+ADD https://raw.githubusercontent.com/easysoft/zentaopms/zentaopms_11.6.5_20191113/www/upgrade.php.tmp /tmp/upgrade.php
 
 COPY docker-entrypoint /usr/local/bin/docker-entrypoint
 
