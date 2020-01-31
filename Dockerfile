@@ -16,14 +16,13 @@ ENV ZENTAO_VER=12.0
 ARG ZENTAO_URL=http://dl.cnezsoft.com/zentao/${ZENTAO_VER}/ZenTaoPMS.${ZENTAO_VER}.stable.zbox_64.tar.gz
 
 RUN chmod +x /usr/local/bin/docker-entrypoint; \
-    curl -SL ${ZENTAO_URL} -o /tmp/zbox.tar.gz && \
-    tar -zxf /tmp/zbox.tar.gz -C /tmp/ && \
-    cd /tmp/zbox/ && \
-    rm -rf data/mysql/zentaoep/ && \
-    rm -rf data/mysql/zentaopro/ && \
-    rm -rf app/zentaoep/ && \
-    rm -rf app/zentaopro/ && \
-    rm -f /tmp/zbox.tar.gz && \
-    cd /tmp/ && \
-    tar zcf /tmp/zbox.tar.gz /tmp/zbox/ && \
-    rm -rf /tmp/zbox/
+    cd /tmp/; \
+    curl -sSL ${ZENTAO_URL} -o zbox.tar.gz && \
+    tar -zxf zbox.tar.gz && \
+    rm -f zbox.tar.gz && \
+    rm -rf zbox/data/mysql/zentaoep/ && \
+    rm -rf zbox/data/mysql/zentaopro/ && \
+    rm -rf zbox/app/zentaoep/ && \
+    rm -rf zbox/app/zentaopro/ && \
+    tar zcf zbox.tar.gz zbox/ && \
+    rm -rf zbox/
