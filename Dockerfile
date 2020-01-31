@@ -17,6 +17,7 @@ ARG ZENTAO_URL=http://dl.cnezsoft.com/zentao/${ZENTAO_VER}/ZenTaoPMS.${ZENTAO_VE
 
 RUN chmod +x /usr/local/bin/docker-entrypoint; \
     cd /tmp/; \
+    chmod +r upgrade.php; \
     curl -sSL ${ZENTAO_URL} -o zbox.tar.gz && \
     tar -zxf zbox.tar.gz && \
     rm -f zbox.tar.gz && \
