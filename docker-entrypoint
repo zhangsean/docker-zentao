@@ -34,9 +34,8 @@ elif [ "$#" == "0" ]; then
       echo "Backuping db, config and upload ..."
       cp -ar /opt/zbox/data/mysql/zentao /opt/
       cp -a /opt/zbox/app/zentao/config/my.php /opt/
-      mv -ar /opt/zbox/app/zentao/www/data/upload /opt/
-      rm -rf /opt/zbox/
-      echo "Installing Zentao ..."
+      mv /opt/zbox/app/zentao/www/data/upload /opt/
+      echo "Installing Zentao version $ZENTAO_VER ..."
       tar -zxf /tmp/zbox.tar.gz -C /opt/
       # auto location / to /zentao/
       echo "<meta http-equiv=\"refresh\" content=\"0; url=/zentao/\" />" > /opt/zbox/app/htdocs/index.html
@@ -49,7 +48,7 @@ elif [ "$#" == "0" ]; then
       echo "Prepare for upgrade ..."
       cp /tmp/upgrade.php /opt/zbox/app/zentao/www/
       touch /opt/zbox/app/zentao/www/ok.txt
-      echo "Prepared to upgraded Zentao version to: $ZENTAO_VER"
+      echo "Prepared to upgraded."
       echo "Please visit your Zentao url to complete the upgrade task."
     fi
 
