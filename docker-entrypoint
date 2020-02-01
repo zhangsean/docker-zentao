@@ -48,7 +48,7 @@ elif [ "$#" == "0" ]; then
       echo "Prepare for upgrade ..."
       cp /tmp/upgrade.php /opt/zbox/app/zentao/www/
       touch /opt/zbox/app/zentao/www/ok.txt
-      echo "Prepared to upgraded."
+      echo "Ready to upgrade."
       echo "Please visit your Zentao url to complete the upgrade task."
     fi
 
