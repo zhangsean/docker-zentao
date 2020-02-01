@@ -11,8 +11,6 @@ elif [ "$#" == "0" ]; then
   if [ ! -d "/opt/zbox" -o ! -d "/opt/zbox/app" ]; then
     echo "Installing Zentao version: $ZENTAO_VER ..."
     tar -zxf /tmp/zbox.tar.gz -C /opt/
-    rm -rf /opt/zbox/app/zentaoep
-    rm -rf /opt/zbox/app/zentaopro
     # auto location / to /zentao/
     echo "<meta http-equiv=\"refresh\" content=\"0; url=/zentao/\" />" > /opt/zbox/app/htdocs/index.html
 
@@ -28,31 +26,30 @@ elif [ "$#" == "0" ]; then
   elif [ -f "/opt/zbox/app/zentao/VERSION" ]; then
 
     CURRENT_VER=`cat /opt/zbox/app/zentao/VERSION | sed 's|.stable||g'`
-    echo "Installed Zentao version: $CURRENT_VER"
+    echo "Current Zentao version: $CURRENT_VER"
     echo "New Zentao version: $ZENTAO_VER"
 
     if [ $ZENTAO_VER != $CURRENT_VER ]; then
       # upgrade zentao version
-      echo "Backuping config/my.php and upload ..."
-      cp /opt/zbox/app/zentao/config/my.php /opt/zbox/app/
-      mv /opt/zbox/app/zentao/www/data/upload /opt/zbox/app/
-      rm -rf /opt/zbox/app/zentao
-      echo "Upgrading Zentao ..."
-      tar -zxf /tmp/zbox.tar.gz -C /tmp/
-      mv /tmp/zbox/app/zentao /opt/zbox/app/
-      mv /tmp/upgrade.php /opt/zbox/app/zentao/www/
-      chmod 664 /opt/zbox/app/zentao/www/upgrade.php
-      rm -rf /tmp/*
-      rm -rf /opt/zbox/tmp/apache/httpd.pid
+      echo "Backuping db, config and upload ..."
+      cp -ar /opt/zbox/data/mysql/zentao /opt/
+      cp -a /opt/zbox/app/zentao/config/my.php /opt/
+      mv /opt/zbox/app/zentao/www/data/upload /opt/
+      echo "Installing Zentao version $ZENTAO_VER ..."
+      tar -zxf /tmp/zbox.tar.gz -C /opt/
       # auto location / to /zentao/
       echo "<meta http-equiv=\"refresh\" content=\"0; url=/zentao/\" />" > /opt/zbox/app/htdocs/index.html
-      echo "Restoring config/my.php and upload ..."
-      mv /opt/zbox/app/my.php /opt/zbox/app/zentao/config/my.php
+      echo "Restoring db, config and upload ..."
+      rm -rf /opt/zbox/data/mysql/zentao
       rm -rf /opt/zbox/app/zentao/www/data/upload
-      mv /opt/zbox/app/upload /opt/zbox/app/zentao/www/data/
+      mv /opt/zentao /opt/zbox/data/mysql/
+      mv /opt/my.php /opt/zbox/app/zentao/config/
+      mv /opt/upload /opt/zbox/app/zentao/www/data/
+      echo "Prepare for upgrade ..."
+      cp /tmp/upgrade.php /opt/zbox/app/zentao/www/
       touch /opt/zbox/app/zentao/www/ok.txt
-      echo "Upgraded Zentao version to: $ZENTAO_VER"
-      echo "Please visit your Zentao website to complete the upgrade task."
+      echo "Ready to upgrade."
+      echo "Please visit your Zentao url to complete the upgrade task."
     fi
 
   fi
