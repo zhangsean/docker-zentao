@@ -33,7 +33,7 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
         run: |
           git fetch --tags
-          export CURRENT=$(git tag | tail -n 1)
+          export CURRENT=$(git tag --sort=taggerdate | tail -n 1)
           echo "CURRENT=$CURRENT"
           mkdir zentaopms
           cd zentaopms
