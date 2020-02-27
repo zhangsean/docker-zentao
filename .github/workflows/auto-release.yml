@@ -33,14 +33,14 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
         run: |
           git fetch --tags
-          export CURRENT=$(git tag --sort=taggerdate | tail -n 1)
+          export CURRENT=$(git tag --sort=creatordate | tail -n 1)
           echo "CURRENT=$CURRENT"
           mkdir zentaopms
           cd zentaopms
           git init
           git remote add origin https://github.com/easysoft/zentaopms.git
           git fetch --tags
-          export LATEST=$(git tag --sort=taggerdate | grep zentaopms | tail -n 1 | sed 's/zentaopms_//' | sed 's/.stable//' | sed 's/.........$//')
+          export LATEST=$(git tag --sort=creatordate | grep zentaopms | tail -n 1 | sed 's/zentaopms_//' | sed 's/.stable//' | sed 's/.........$//')
           echo "LATEST=$LATEST"
           if [ "$LATEST" != "$CURRENT" ]; then
             echo "New zentao release: $LATEST"
