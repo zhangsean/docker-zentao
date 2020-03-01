@@ -9,7 +9,7 @@ name: Follow up zentao release
 
 on:
   schedule:
-    - cron: 1 23 * * *
+    - cron: 0 23 * * *
   watch:
     types: [started]
     if: github.event.repository.owner.id == github.event.sender.id
@@ -59,10 +59,12 @@ jobs:
         run: |
           echo "Changing version from $CURRENT to $LATEST"
           sed -i "/ZENTAO_VER/s/$CURRENT/$LATEST/g" Dockerfile
-          if [[ `echo $LATEST | awk -F. '{print $3}'` != '' ]]; then
-            sed -i "/ZENTAO_URL/s/.stable//g" Dockerfile
+          if [[ `echo $LATEST | awk -F. '{print $3}'` == '' ]]; then
+            sed -i "/ZENTAO_URL/s/ZENTAO_VER}.zbox/ZENTAO_VER}.stable.zbox/g" Dockerfile
+          else
+            sed -i "/ZENTAO_URL/s/ZENTAO_VER}.stable.zbox/ZENTAO_VER}.zbox/g" Dockerfile
           fi
-          sed -i "/$CURRENT/i - `$LATEST`" README.md
+          sed -i "/$CURRENT/i - \`$LATEST\`" README.md
           # commit and push
           git config user.email zxf2342@qq.com
           git config user.name zhangsean
