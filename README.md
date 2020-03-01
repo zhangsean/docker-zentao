@@ -17,47 +17,56 @@ Office Support: [http://www.zentao.net/](http://www.zentao.net/)
 
 **Open soure edition**
 
-- `12.0`,`latest`
+- `latest`
+- `12.0`
 - `11.7`
 - `11.6`
 - `11.5`
 
 ### QuickStart
 
-open soure edition:
+Export zentao only:
+
 ``` bash
 mkdir -p /data/zbox && \
-docker run -d -p 80:80 -p 3306:3306 \
-        -e ADMINER_USER="root" -e ADMINER_PASSWD="password" \
-        -e BIND_ADDRESS="false" \
+docker run -itd \
+        -p 80:80 \
+        -e ADMINER_USER="root" \
+        -e ADMINER_PASSWD="password" \
         -v /data/zbox/:/opt/zbox/ \
         --add-host smtp.exmail.qq.com:163.177.90.125 \
         --name zentao-server \
         zhangsean/zentao:latest
 ```
 
-pro edition:
+Export zentao and mysql:
+
 ``` bash
 mkdir -p /data/zbox && \
-docker run -d -p 80:80 -p 3306:3306 \
-        -e USER="root" -e PASSWD="password" \
-        -e BIND_ADDRESS="false" \
+docker run -itd \
+        -p 80:80 \
+        -p 3306:3306 \
+        -e BIND_ADDRESS=false \
+        -e ADMINER_USER="root" \
+        -e ADMINER_PASSWD="password" \
         -v /data/zbox/:/opt/zbox/ \
-        --name zentao-server-pro \
-        zhangsean/zentao:pro
+        --add-host smtp.exmail.qq.com:163.177.90.125 \
+        --name zentao-server \
+        zhangsean/zentao:latest
 ```
 
-Note: Make sure your Host feed available on either port `80` or `3306`.
+> Note: Make sure your host feed available on either port `80` or `3306`.
 
 ### Environment configuration
 
 * `ADMINER_USER` : set the web login database Adminer account.
-* `ADMINER_PASSWD` : set the web login database Adminer password. 
+* `ADMINER_PASSWD` : set the web login database Adminer password.
 * `BIND_ADDRESS` : if set value with `false`,the MySQL server will not bind address.
-* `SMTP_HOST` : set the smtp server IP and host.(If can't send mail,it will be helpful.) Can also use `extra_host` in docker-compose.yaml,or use param `--add-host` when use `dokcer run` command.
+* If can't send mail, you can use `extra_host` in docker-compose.yaml, or param `--add-host` in `dokcer run` command.
 
-Note: The Zentao administrator account is **admin**,and default initialization password is **123456**.
-      And MySQL root account password is **123456**,please change password when you first login.
+> Note:
+The Zentao administrator account is **admin**,and default initialization password is **123456**.
+And MySQL root account password is **123456**,please change password when you first login.
 
 ### Upgrade Version
 
