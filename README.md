@@ -18,6 +18,7 @@ Office Support: [http://www.zentao.net/](http://www.zentao.net/)
 **Open soure edition**
 
 - `latest`
+- `12.2`
 - `12.1`
 - `12.0.1`
 - `12.0`
