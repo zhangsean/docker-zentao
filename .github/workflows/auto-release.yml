@@ -44,8 +44,13 @@ jobs:
           echo "LATEST=$LATEST"
           if [ "$LATEST" != "$CURRENT" ]; then
             echo "New zentao release: $LATEST"
-            echo "::set-env name=CURRENT::$CURRENT"
-            echo "::set-env name=LATEST::$LATEST"
+            export ZENTAO_URL=http://dl.cnezsoft.com/zentao/${LATEST}/ZenTaoPMS.${LATEST}.stable.zbox_64.tar.gz
+            if [ "`curl -sI $ZENTAO_URL | grep HTTP | awk '{print $2}'`" != "200" ]; then
+              echo "Install package not released: $LATEST"
+            else
+              echo "::set-env name=CURRENT::$CURRENT"
+              echo "::set-env name=LATEST::$LATEST"
+            fi
           else
             echo "No new zentao release"
             echo "::set-env name=LATEST::"
