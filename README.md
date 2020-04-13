@@ -19,6 +19,7 @@ Office Support: [http://www.zentao.net/](http://www.zentao.net/)
 
 - `latest`
 - `12.3`
+- `12.3`
 - `12.2`
 - `12.1`
 - `12.0.1`
