@@ -39,12 +39,16 @@ jobs:
           cd zentaopms
           git init
           git remote add origin https://github.com/easysoft/zentaopms.git
-          git fetch --tags
-          export LATEST=$(git tag --sort=creatordate | grep zentaopms | tail -n 1 | sed 's/zentaopms_//' | sed 's/.stable//' | sed 's/.........$//')
+          git fetch --tags > /dev/null
+          export LATEST=$(git tag --sort=creatordate | grep zentaopms | tail -n 1 | sed -n 's/zentaopms_\(.*\)_.*/\1/p')
           echo "LATEST=$LATEST"
           if [ "$LATEST" != "$CURRENT" ]; then
             echo "New zentao release: $LATEST"
             export ZENTAO_URL=http://dl.cnezsoft.com/zentao/${LATEST}/ZenTaoPMS.${LATEST}.stable.zbox_64.tar.gz
+            # Fix version are not stable.
+            if [ "`echo $LATEST | sed -n 's/.*\..*\.\(.*\)$/\1/p'`" != "" ]; then
+              export ZENTAO_URL=`echo $ZENTAO_URL | sed 's/.stable//'`
+            fi
             if [ "`curl -sI $ZENTAO_URL | grep HTTP | awk '{print $2}'`" != "200" ]; then
               echo "Install package not released: $LATEST"
             else
