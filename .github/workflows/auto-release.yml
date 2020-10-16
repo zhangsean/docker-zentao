@@ -52,14 +52,13 @@ jobs:
             if [ "`curl -sI $ZENTAO_URL | grep HTTP | awk '{print $2}'`" != "200" ]; then
               echo "Install package not released: $LATEST"
             else
-              echo "::set-env name=CURRENT::$CURRENT"
-              echo "::set-env name=LATEST::$LATEST"
+              echo "CURRENT=$CURRENT" >> $GITHUB_ENV
+              echo "LATEST=$LATEST" >> $GITHUB_ENV
             fi
           else
             echo "No new zentao release"
-            echo "::set-env name=LATEST::"
+            echo "LATEST=" >> $GITHUB_ENV
           fi
-
       - name: Bump to new zentao version
         if: success() && env.CURRENT != '' && env.LATEST != ''
         env:
