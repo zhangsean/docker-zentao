@@ -11,7 +11,7 @@ EXPOSE 80
 
 ENTRYPOINT ["docker-entrypoint"]
 
-ENV ZENTAO_VER=12.4.3
+ENV ZENTAO_VER=20.0.beta1
 
 ARG ZENTAO_URL=http://dl.cnezsoft.com/zentao/${ZENTAO_VER}/ZenTaoPMS.${ZENTAO_VER}.zbox_64.tar.gz
 
