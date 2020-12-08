@@ -40,7 +40,7 @@ jobs:
           git init
           git remote add origin https://github.com/easysoft/zentaopms.git
           git fetch --tags > /dev/null
-          export LATEST=$(git tag --sort=creatordate | grep zentaopms | tail -n 1 | sed -n 's/zentaopms_\(.*\)_.*/\1/p' | sed 's/.stable//')
+          export LATEST=$(git tag --sort=creatordate | grep zentaopms | tail -n 1 | head -n 1 | sed -n 's/zentaopms_\(.*\)_.*/\1/p' | sed 's/.stable//')
           echo "LATEST=$LATEST"
           if [ "$LATEST" != "$CURRENT" ]; then
             echo "New zentao release: $LATEST"
