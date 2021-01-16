@@ -23,6 +23,7 @@ Office Support: [http://www.zentao.net/](http://www.zentao.net/)
 - `12.5.3`
 - `12.5.3`
 - `12.5.3`
+- `12.5.3`
 - `20.0.beta1`
 - `12.5.1`
 - `12.4.3`
