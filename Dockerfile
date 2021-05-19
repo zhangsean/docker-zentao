@@ -11,9 +11,9 @@ EXPOSE 80
 
 ENTRYPOINT ["docker-entrypoint"]
 
-ENV ZENTAO_VER=12.5.3
+ENV ZENTAO_VER=15.0
 
-ARG ZENTAO_URL=http://dl.cnezsoft.com/zentao/${ZENTAO_VER}/ZenTaoPMS.${ZENTAO_VER}.zbox_64.tar.gz
+ARG ZENTAO_URL=http://dl.cnezsoft.com/zentao/${ZENTAO_VER}/ZenTaoPMS.${ZENTAO_VER}.stable.zbox_64.tar.gz
 
 RUN chmod +x /usr/local/bin/docker-entrypoint; \
     cd /tmp/; \
