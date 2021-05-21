@@ -78,10 +78,11 @@ jobs:
           git config user.name zhangsean
           git commit -a -m "Bump to zentao $LATEST"
           git push
+          echo "COMMIT=$LATEST" >> $GITHUB_ENV
 
       - name: Create Release
         uses: actions/create-release@v1
-        if: success() && env.LATEST != ''
+        if: success() && env.COMMIT != ''
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
