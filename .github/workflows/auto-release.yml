@@ -77,12 +77,14 @@ jobs:
           git config user.email zxf2342@qq.com
           git config user.name zhangsean
           git commit -a -m "Bump to zentao $LATEST"
+          git tag $LATEST
           git push
-          echo "COMMIT=$LATEST" >> $GITHUB_ENV
+          git push --tags
+          echo "TAG=$LATEST" >> $GITHUB_ENV
 
       - name: Create Release
         uses: actions/create-release@v1
-        if: success() && env.COMMIT != ''
+        if: success() && env.TAG != ''
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
